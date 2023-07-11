@@ -1,7 +1,7 @@
 # BSC_IT_AI_Practical
 
 Practical 1
-'''py
+```py
 import collections
 import queue
 def bfs(graph, root):
@@ -17,7 +17,4 @@ def bfs(graph, root):
 __name__=="__main__"
 graph={0:[1,2,3], 1:[0, 2], 2:[0, 1, 4], 3:[0], 4:[2]}
 bfs(graph,0)
-            
-
-
-'''
+```
