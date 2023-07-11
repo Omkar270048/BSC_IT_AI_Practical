@@ -1,6 +1,6 @@
 # BSC_IT_AI_Practical
 
-Practical 1 - Breath First Search
+Practical 1 - Breath First Search (BFS)
 ```py
 import collections
 import queue
