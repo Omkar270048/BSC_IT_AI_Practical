@@ -1,4 +1,4 @@
-# BSC_IT_AI_Practical
+# BSC IT AI Practical
 
 Practical 1 - Breath First Search (BFS)
 ```py
