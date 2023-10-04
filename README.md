@@ -127,3 +127,145 @@ def alphaBeta(start, size):
 
 alphaBeta(0, len(list))
 ```
+
+Write a program for Hill climbing problem.
+```py
+list = [2,4,5,6,7,8,9,10,3,4,5,6,7,8,9,34,36,23,21,45]
+output = []
+previous = None
+for x in range(len(list)):
+    if x > 0:
+        previous = list[x-1]
+        if list[x-1] >= list[x]:
+            break
+    output.append(list[x])
+
+print(output)
+```
+Output:
+```
+[2, 4, 5, 6, 7, 8, 9, 10]
+```
+
+Write a program to implement A* algorithm.
+```py
+import heapq
+
+def astar(grid, start, goal):
+    def heuristic(node):
+        x1, y1 = node
+        x2, y2 = goal
+        return abs(x1 - x2) + abs(y1 - y2)  # Manhattan distance
+
+    open_set = [(0, start)]  # Priority queue with initial cost and node
+    came_from = {}
+    g_score = {node: float('inf') for node in grid}
+    g_score[start] = 0
+
+    while open_set:
+        _, current = heapq.heappop(open_set)
+
+        if current == goal:
+            path = [current]
+            while current in came_from:
+                current = came_from[current]
+                path.append(current)
+            return path[::-1]
+
+        for neighbor in neighbors(current):
+            tentative_g_score = g_score[current] + 1  # Assuming each step has a cost of 1
+
+            if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score = tentative_g_score + heuristic(neighbor)
+
+                if neighbor not in [node for _, node in open_set]:
+                    heapq.heappush(open_set, (f_score, neighbor))
+
+    return None  # No path found
+
+def neighbors(node):
+    x, y = node
+    return [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+
+# Example usage
+if __name__ == "__main__":
+    grid = {(0, 0), (0, 1), (0, 2), (1, 2), (2, 2), (2, 3), (3, 3)}
+    start = (0, 0)
+    # start = (0,2)
+    goal = (3, 3)
+
+    path = astar(grid, start, goal)
+
+    if path:
+        print("Shortest Path:", path)
+    else:
+        print("No path found.")
+```
+A* Output
+```
+Shortest Path: [(0, 0), (0, 1), (0, 2), (0, 3), (1, 3), (2, 3), (3, 3)]
+```
+
+Write a program to implement AO* algorithm.
+```py
+import heapq
+
+def astar(grid, start, goal):
+    def heuristic(node):
+        x1, y1 = node
+        x2, y2 = goal
+        return abs(x1 - x2) + abs(y1 - y2)  # Manhattan distance
+
+    open_set = [(0, start)]  # Priority queue with initial cost and node
+    came_from = {}
+    g_score = {node: float('inf') for node in grid}
+    g_score[start] = 0
+
+    while open_set:
+        _, current = heapq.heappop(open_set)
+
+        if current == goal:
+            path = [current]
+            while current in came_from:
+                current = came_from[current]
+                path.append(current)
+            return path[::-1]
+
+        for neighbor in neighbors(current):
+            tentative_g_score = g_score[current] + 1  # Assuming each step has a cost of 1
+
+            if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score = tentative_g_score + heuristic(neighbor)
+
+                if neighbor not in [node for _, node in open_set]:
+                    heapq.heappush(open_set, (f_score, neighbor))
+
+    return None  # No path found
+
+def neighbors(node):
+    x, y = node
+    return [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+
+# Example usage
+if __name__ == "__main__":
+    grid = {(0, 0), (0, 1), (0, 2), (1, 2), (2, 2), (2, 3), (3, 3)}
+    # start = (0, 0)
+    start = (0,2)
+    goal = (3, 3)
+
+    path = astar(grid, start, goal)
+
+    if path:
+        print("Shortest Path:", path)
+    else:
+        print("No path found.")
+```
+
+AO* output
+```
+Shortest Path: [(0, 2), (0, 3), (1, 3), (2, 3), (3, 3)]
+```
