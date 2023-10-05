@@ -269,3 +269,41 @@ AO* output
 ```
 Shortest Path: [(0, 2), (0, 3), (1, 3), (2, 3), (3, 3)]
 ```
+
+Design an application to simulate number puzzle problem (8 puzzle game)
+```py
+from collections import deque
+
+def get_neighbors(state):
+    moves = [1, -1, 3, -3]
+    empty_index = state.index(0)
+    neighbors = []
+    for move in moves:
+        new_index = empty_index + move
+        if 0 <= new_index < 9:
+            neighbor = state[:]
+            neighbor[empty_index], neighbor[new_index] = neighbor[new_index], neighbor[empty_index]
+            neighbors.append(neighbor)
+    return neighbors
+
+def bfs(initial_state, goal_state):
+    visited, queue = set(), deque([(initial_state, [])])
+    while queue:
+        state, path = queue.popleft()
+        if state == goal_state: return path
+        for neighbor in get_neighbors(state):
+            if tuple(neighbor) not in visited: visited.add(tuple(neighbor)); queue.append((neighbor, path + [neighbor]))
+    return None
+
+initial_state = [1, 2, 3, 0, 4, 6, 7, 5, 8]
+goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+solution_path = bfs(initial_state, goal_state)
+if solution_path:
+    print("Solution path:", solution_path)
+else:
+    print("No solution found.")
+```
+```
+Solution path: [[1, 2, 3, 4, 0, 6, 7, 5, 8], [1, 2, 3, 4, 5, 6, 7, 0, 8], [1, 2, 3, 4, 5, 6, 7, 8, 0]]
+```
