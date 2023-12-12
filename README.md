@@ -358,3 +358,185 @@ Path from initial state to solution state ::
 (3, 3)
 (4, 2)
 ```
+Write a program to solve Missionaries and Cannibals problem.
+```py
+lM, lC, rM, rC, userM, userC, k = 3,3,0,0,0,0,0
+print("\nM M M C C C |	 --- | \n")
+def printState(arrow):
+    print("\n")
+    for i in range(0, lM):
+        print("M ", end="")
+    for i in range(0, lC):
+        print("C ", end="")
+    print(arrow, end="")
+    for i in range(0, rM):
+        print("M ", end="")
+    for i in range(0, rC):
+        print("C ", end="")
+    print("\n")
+try:
+    while (True):
+        while (True):
+            print("Left side -> right side river travel")
+            uM = int(input("Enter number of Missionaries travel => "))
+            uC = int(input("Enter number of Cannibals travel => "))
+            if ((uM == 0) and (uC == 0)):
+                print("Empty travel not possible")
+                print("Re-enter : ")
+            elif (((uM + uC) <= 2) and ((lM - uM) >= 0) and ((lC - uC) >= 0)):
+                break
+            else:
+                print("Wrong input re-enter : ")
+        lM = (lM - uM)
+        lC = (lC - uC)
+        rM += uM
+        rC += uC
+        printState("| --> | ")
+        k += 1
+        if (((lC == 3) and (lM == 1)) or ((lC == 3) and (lM == 2)) or ((lC == 2) and (lM == 1)) or (
+                (rC == 3) and (rM == 1)) or ((rC == 3) and (rM == 2)) or ((rC == 2) and (rM == 1))):
+            print("Cannibals eat missionaries:\nYou lost the game")
+            break
+        if ((rM + rC) == 6):
+            print("You won the game : \n\tCongrats")
+            print("Total attempt")
+            print(k)
+            break
+        while (True):
+            print("Right side -> Left side river travel")
+            userM = int(input("Enter number of Missionaries travel => "))
+            userC = int(input("Enter number of Cannibals travel => "))
+            if ((userM == 0) and (userC == 0)):
+                print("Empty travel not possible")
+                print("Re-enter : ")
+            elif (((userM + userC) <= 2) and ((rM - userM) >= 0) and ((rC - userC) >= 0)):
+                break
+            else:
+                print("Wrong input re-enter : ")
+        lM += userM
+        lC += userC
+        rM -= userM
+        rC -= userC
+        k += 1
+        printState("| <-- |")
+        if (((lC == 3) and (lM == 1)) or ((lC == 3) and (lM == 2)) or ((lC == 2) and (lM == 1)) or (
+                (rC == 3) and (rM == 1)) or ((rC == 3) and (rM == 2)) or ((rC == 2) and (rM == 1))):
+            print("Cannibals eat missionaries:\nYou lost the game")
+            break
+except EOFError as e:
+    print("\nInvalid input please retry !!")
+```
+
+Write a program to shuffle Deck of cards.
+```py
+import  itertools, random
+deck = list(itertools.product(range(1,14), ["spade", "heart", "diamond", "club"]))
+random.shuffle(deck)
+print("you got")
+for x in range(5):
+    print(deck[x][0], "of", deck[x][1])
+```
+
+Solve traveling salesman problem using artificial intelligence technique.
+```py
+from sys import maxsize
+from itertools import permutations
+
+V = 4
+
+
+# implementation of traveling Salesman Problem
+def travellingSalesmanProblem(graph, s):
+    # store all vertex apart from source vertex
+    vertex = []
+    for i in range(V):
+        if i != s:
+            vertex.append(i)
+
+    # store minimum weight Hamiltonian Cycle
+    min_path = maxsize
+    next_permutation = permutations(vertex)
+    for i in next_permutation:
+
+        # store current Path weight(cost)
+        current_pathweight = 0
+
+        # compute current path weight
+        k = s
+        for j in i:
+            current_pathweight += graph[k][j]
+            k = j
+        current_pathweight += graph[k][s]
+
+        # update minimum
+        min_path = min(min_path, current_pathweight)
+
+    return min_path
+
+
+# Driver Code
+if __name__ == "__main__":
+    # matrix representation of graph
+    graph = [[0, 10, 15, 20], [10, 0, 35, 25],
+             [15, 35, 0, 30], [20, 25, 30, 0]]
+    s = 0
+    print(travellingSalesmanProblem(graph, s))
+```
+
+word problem | minimum jum to reach given distance
+```py
+class point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+# To represent line of (ax + by + c)format
+
+
+class line:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+# Returns 1 if evaluation is greater > 0,
+# else returns -1
+
+
+def evalPointOnLine(p, curLine):
+    eval = curLine.a * p.x + curLine.b * p.y + curLine.c
+    if (eval > 0):
+        return 1
+    return -1
+
+# Returns minimum jumps to reach
+# dest point from start point
+
+
+def minJumpToReachDestination(start, dest, lines, N):
+    jumps = 0
+    for i in range(N):
+        # get sign of evaluation from point
+        # co-ordinate and line equation
+        signStart = evalPointOnLine(start, lines[i])
+        signDest = evalPointOnLine(dest, lines[i])
+
+        # if both evaluation are of opposite sign,
+        # increase jump by 1
+        if (signStart * signDest < 0):
+            jumps = jumps + 1
+
+    return jumps
+
+
+# Driver code to test above methods
+start = point(1, 1)
+dest = point(-2, -1)
+
+lines = []
+lines.append(line(1, 0, 0))
+lines.append(line(0, 1, 0))
+lines.append(line(1, 1, -2))
+
+print(minJumpToReachDestination(start, dest, lines, 3))
+```
