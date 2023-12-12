@@ -540,3 +540,54 @@ lines.append(line(1, 1, -2))
 
 print(minJumpToReachDestination(start, dest, lines, 3))
 ```
+
+Solve constraint satisfaction problem
+```cmd
+pip install python-constraint
+```
+```py
+from constraint import *
+def constant_function(a, b, c):
+    return a + b == c
+problem = Problem()
+problem.addVariable('A', range(1, 11))
+problem.addVariable('B', range(1, 11))
+problem.addVariable('C', range(1, 11))
+problem.addConstraint(constant_function, ('A', 'B', 'C'))
+solutions = problem.getSolutions()
+for solution in solutions:
+    print(f'A={solution["A"]}, B={solution["B"]}, C={solution["C"]}')
+```
+Derive the expressions based on Associative law
+```py
+def associative_law_add(a,b,c):
+    la = (a+b)+c
+    ra = a+(b+c)
+    if la == ra:
+        print(f'The addition is associative: ({a}+{b})+{c} = {a} + ({b} + {c})')
+    else:
+        print(f'The addition is not associative: ({a}+{b})+{c} = {a} + ({b} + {c})')
+associative_law_add(3,5,7)
+```
+Derive the expressions based on Distributive law
+```cmd
+pip install sympy
+```
+```py
+import sympy as sp
+a,b,c = sp.symbols('a b c')
+original_expr =  a*(b+c)
+distributive_expr = sp.expand(original_expr)
+print("Original Expression:", original_expr)
+print("Expression after applying distributive law:", distributive_expr)
+```
+
+Write a program to derive the predicate.
+```py
+prd = input("Enter a predicate:")
+prd2 = input("Enter a predicate:")
+arg = input("Enter an argument:")
+print(prd + "->" + arg)
+print(arg + "->" + prd2)
+print(prd + "->" + prd2)
+```
