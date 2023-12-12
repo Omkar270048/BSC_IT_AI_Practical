@@ -307,3 +307,54 @@ else:
 ```
 Solution path: [[1, 2, 3, 4, 0, 6, 7, 5, 8], [1, 2, 3, 4, 5, 6, 7, 0, 8], [1, 2, 3, 4, 5, 6, 7, 8, 0]]
 ```
+
+Write a program to solve water jug problem.
+```py
+from collections import deque
+def water_jug_bfs(a, b, target):
+    visited = set()
+    q = deque([(0, 0)])
+    parent = {}
+    while q:
+        u = q.popleft()
+        if u in visited:
+            continue
+        visited.add(u)
+        if u[0] == target or u[1] == target:
+            path = []
+            while u != (0, 0):
+                path.append(u)
+                u = parent[u]
+            path.append((0, 0))
+            path.reverse()
+            for state in path:
+                print(state)
+            return
+        next_states = [
+            (u[0], b),  # Fill Jug2
+            (a, u[1]),  # Fill Jug1
+            (u[0] + min(u[1], a - u[0]), u[1] - min(u[1], a - u[0])),  # Pour Jug2 to Jug1
+            (u[0] - min(u[0], b - u[1]), u[1] + min(u[0], b - u[1])),  # Pour Jug1 to Jug2
+            (a, 0),  # Empty Jug2
+            (0, b)   # Empty Jug1
+        ]
+        for v in next_states:
+            if 0 <= v[0] <= a and 0 <= v[1] <= b and v not in visited:
+                q.append(v)
+                parent[v] = u
+    print("No solution")
+
+if __name__ == '__main__':
+    Jug1, Jug2, target = 4, 3, 2
+    print("Path from initial state to solution state ::")
+    water_jug_bfs(Jug1, Jug2, target)
+```
+output
+```
+Path from initial state to solution state ::
+(0, 0)
+(0, 3)
+(3, 0)
+(3, 3)
+(4, 2)
+```
