@@ -1,6 +1,37 @@
 # BSC IT AI Practical
 
-Practical 1 - Breath First Search (BFS)
+Practical 1 
+
+Write a program to implement depth first search algorithm.
+```py
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+
+    visited.add(start)
+    print(start, end=' ')
+
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F', 'G'],
+    'D': ['B'],
+    'E': ['B'],
+    'F': ['C'],
+    'G': ['C']
+}
+
+# Start DFS from node 'A'
+print("DFS traversal starting from node 'A':")
+dfs(graph, 'A')
+
+```
+
+Breath First Search (BFS)
 ![image](https://github.com/Omkar270048/BSC_IT_AI_Practical/assets/69665958/560d211b-a56a-46ce-b762-ffdacae20ced)
 ```py
 graph = {
